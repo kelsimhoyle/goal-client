@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { UserContextProvider } from "./contexts/UserContext";
+import Home from "./pages/Home";
+import AddGoal from "./pages/User/AddGoal";
+import Dashboard from "./pages/User/Dashboard";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContextProvider>
+
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/user/:id" component={Dashboard} />
+            <Route exact path="/user/addgoal/:id" component={AddGoal} />
+          </Switch>
+        </div>
+      </Router>
+      </UserContextProvider>
   );
-}
+};
 
 export default App;
