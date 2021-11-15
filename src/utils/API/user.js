@@ -2,10 +2,9 @@ import axios from "axios";
 
 const userAPI = {
   create: async (user) => {
+    console.log(user)
     try {
-      const newUser = await axios.post("/api/user", {
-        name: user,
-      });
+      const newUser = await axios.post("/api/user", user);
       return newUser;
     } catch (error) {
       console.error(error);
@@ -48,6 +47,22 @@ const userAPI = {
       return error;
     }
   },
+  login: async (user) => {
+    try {
+      const loggedIn = await axios.post("/api/user/login", user)
+      return loggedIn;
+    } catch (error) {
+      return error;
+    }
+  },
+  logOut: async (user) => {
+    try {
+      const loggedOut = await axios.post("/api/user/logout", user)
+      return loggedOut
+    } catch (error) {
+      return error
+    }
+  }
 };
 
 export default userAPI;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 
 import { UserContext } from "../../../contexts/UserContext";
 import usergoalAPI from "../../../utils/API/usergoal";
@@ -36,16 +36,17 @@ const Dashboard = () => {
       })
       .catch((error) => console.log(error));
 
-    userAPI
-      .getOne(id)
-      .then((data) => setUser(data))
-      .catch((error) => console.log(error));
-
     setLoading(false);
+
+    return () => {
+      setUserGoals({ completed: [], todo: [] }); // This worked for me
+    };
   }, [id, loading]);
+
+  if (!user) return <Redirect to="/" push={true} />
   return (
-    <div className="container mx-auto">
-      <h1>{user.name}'s Goals</h1>
+    <div className="container mx-auto flex-column align-center mt-10">
+      <h1 className="text-3xl uppercase">{user.first_name}'s Goals</h1>
       <div className="flex align-center gap-4">
         {loading ? (
           "Loading..."
